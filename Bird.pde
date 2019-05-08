@@ -29,4 +29,10 @@ public class Bird{
   public void flap(){
     this.velocity -= this.flap_force;
   }
+  
+  public void is_dead(){
+    if(this.y == height){
+      noLoop();
+    }
+  }
 }
