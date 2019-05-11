@@ -1,22 +1,36 @@
 Bird bird;
 ArrayList<Pipe> pipes = new ArrayList<Pipe>();
 int score = 0;
+float pipeSpeed = 1;
 
 public void setup(){
   size(800, 600);
   bird = new Bird();
-  pipes.add(new Pipe());
+  pipes.add(new Pipe(200));
 }
 
 public void draw(){
-  background(0); //<>//
+  background(135, 206, 235); // Skyblue background //<>//
   bird.update();
   bird.show(); //<>//
   
   
 
   if(frameCount % 250 == 0){
-      pipes.add(new Pipe());
+    // Graduated list of pipe gaps based on current score
+    if(score > 200){
+      pipes.add(new Pipe(80));
+    }else if(score > 175){
+      pipes.add(new Pipe(100));
+    }else if(score > 150){
+      pipes.add(new Pipe(120));
+    }else if(score > 125){
+      pipes.add(new Pipe(140));
+    }else if(score > 100){
+      pipes.add(new Pipe(170));
+    }else{
+      pipes.add(new Pipe(200));
+    }
   }
   
   for(int i = 0; i < pipes.size(); i++){
@@ -42,15 +56,35 @@ public void draw(){
   if(frameCount % 25 == 0){
     score++;
   }
+   
   
   // Display score or dead
   if(!bird.checkHealth()){
     textSize(20);
     text("Score: " + str(score), 10, 20);
+    
+    // Graduated speed if scoreing increases
+    if(score > 200){
+      this.pipeSpeed = 2;
+    }else if(score > 150){
+      this.pipeSpeed = 1.75;
+    }else if(score > 100){
+      this.pipeSpeed = 1.50;
+    }else if(score > 75){
+      this.pipeSpeed = 1.25;
+    }else{
+      this.pipeSpeed = 1;
+    }
+    for (Pipe pipe: this.pipes){
+      pipe.setSpeed(this.pipeSpeed);
+  }
   }
   else{
     textSize(20);
     text("Player Dead!", 10, 20);
+    for (Pipe pipe: this.pipes){
+      pipe.setSpeed(0);
+    }
   }
 } //<>//
 
