@@ -76,6 +76,7 @@ public void draw(){
       this.pipeSpeed = 1;
     }
     for (Pipe pipe: this.pipes){
+      // Set each pipe in list with current speed
       pipe.setSpeed(this.pipeSpeed);
   }
   }

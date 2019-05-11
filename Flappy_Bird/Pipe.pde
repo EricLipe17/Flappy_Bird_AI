@@ -21,10 +21,22 @@ public class Pipe{
   }
   
   public void update(){
+    // Moves pipe by 'speed' distance each tick
     this.x -= this.speed;
   }
   
   public void setSpeed(float newSpeed){
+    // Updates pipe speed setting for movement
     this.speed = newSpeed;
+  }
+  
+  public float get_top_lip(){
+    // Get method returns value of 'lip' or bottom of top pipe adjacent to gap
+    return this.top_lip;
+  }
+  
+  public float get_bottom_lip(){
+    // Get method returns value of 'lip' or top of bottom pipe adjacent to gap
+    return this.bottom_lip;
   }
 }
