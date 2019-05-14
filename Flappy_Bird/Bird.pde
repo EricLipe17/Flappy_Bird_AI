@@ -1,6 +1,7 @@
 public class Bird{
   private int x, y;
   private float velocity, gravity, flap_force;
+  private boolean isDead = false;
   
   public Bird(){
     this.x = 50;
@@ -12,6 +13,11 @@ public class Bird{
   
   public void show(){
     fill(255);
+    if(!isDead){
+      fill(255, 255, 0);
+    }else{
+      fill(255, 0, 0);
+    }
     ellipse(this.x, this.y, 20, 20);
   }
   
@@ -20,7 +26,10 @@ public class Bird{
       this.y = height;
       this.velocity = 0;
     }
-
+      isDead = true;
+    }else if(this.y <= 0){
+      isDead = true;
+    }
     this.velocity += gravity;
     this.velocity *= 0.95;
     this.y += this.velocity;
@@ -35,4 +44,11 @@ public class Bird{
       noLoop();
     }
   }
+  public boolean checkHealth(){
+    return isDead;
+  }
+  
+  public void killBird(){
+    isDead = true;
+  }  
 }
