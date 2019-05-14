@@ -52,7 +52,6 @@ public void draw(){
   for(int i = 0; i < pipes.size(); i++){
    if(pipes.get(i).offscreen()){ 
       pipes.remove(pipes.get(i)); 
-      println(pipes.size());
     }
     
     pipes.get(i).show();

@@ -1,10 +1,12 @@
 public class Bird{
 
-  private int x, y, bird_size;
+  private int x, y, bird_size, img_size;
 
   private float velocity, gravity, flap_force;
 
   private boolean isDead = false;
+  
+  private PImage bird_img;
 
   
 
@@ -21,6 +23,10 @@ public class Bird{
     this.flap_force = 14;
     
     this.bird_size = 20;
+    
+    this.bird_img = loadImage("flappy_free.png");
+    
+    this.img_size = 250;
 
   }
 
@@ -34,6 +40,7 @@ public class Bird{
       fill(255, 0, 0);
     }
     ellipse(this.x, this.y, bird_size, bird_size);
+    image(bird_img, this.x - 125, this.y - 125, img_size, img_size);
   }
 
   
