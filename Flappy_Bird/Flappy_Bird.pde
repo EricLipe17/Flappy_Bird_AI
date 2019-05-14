@@ -2,7 +2,7 @@ Bird bird; //<>// //<>// //<>//
 
 ArrayList<Pipe> pipes = new ArrayList<Pipe>();
 
-int score = 0;
+int score = 0, frame_rate = 250, bird_size;
 
 float pipeSpeed = 1;
 
@@ -13,6 +13,8 @@ public void setup(){
   size(800, 600);
 
   bird = new Bird();
+  
+  bird_size = bird.get_bird_size() / 2;
 
   pipes.add(new Pipe(200));
 
@@ -25,7 +27,7 @@ public void draw(){
   bird.update();
   bird.show(); //<>//
 
-  if(frameCount % 250 == 0){
+  if(frameCount % frame_rate == 0){
     // Graduated list of pipe gaps based on current score
     if(score > 200){
       pipes.add(new Pipe(80));
@@ -48,15 +50,21 @@ public void draw(){
   }
 
   for(int i = 0; i < pipes.size(); i++){
+   if(pipes.get(i).offscreen()){ 
+      pipes.remove(pipes.get(i)); 
+      println(pipes.size());
+    }
+    
     pipes.get(i).show();
+     
     // Create temp variables for each pipe set to check vs bird position
     int tempLeft = pipes.get(i).x;
     int tempRight = tempLeft + pipes.get(i).rect_width;
     float tempTopLip = pipes.get(i).top_lip;
     float tempBottomLip = pipes.get(i).bottom_lip;
     // Check if the bird is in a pipe
-    if(bird.x > tempLeft && bird.x < tempRight){
-      if(bird.y < tempTopLip || bird.y > tempBottomLip){
+    if(bird.x + bird_size > tempLeft && bird.x + bird_size < tempRight){
+      if(bird.y - bird_size < tempTopLip || bird.y + 2*bird_size > tempBottomLip){
         // If it is, kill the bird
         bird.killBird();
       }

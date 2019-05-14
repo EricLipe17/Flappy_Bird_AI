@@ -1,6 +1,6 @@
 public class Bird{
 
-  private int x, y;
+  private int x, y, bird_size;
 
   private float velocity, gravity, flap_force;
 
@@ -19,6 +19,8 @@ public class Bird{
     this.velocity = 0;
 
     this.flap_force = 14;
+    
+    this.bird_size = 20;
 
   }
 
@@ -31,7 +33,7 @@ public class Bird{
     else{
       fill(255, 0, 0);
     }
-    ellipse(this.x, this.y, 20, 20);
+    ellipse(this.x, this.y, bird_size, bird_size);
   }
 
   
@@ -66,5 +68,11 @@ public class Bird{
 
   public void killBird(){
     isDead = true;
+  }
+  
+  
+  
+  public int get_bird_size(){
+    return this.bird_size;
   }
 }

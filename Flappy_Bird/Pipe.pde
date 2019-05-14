@@ -63,4 +63,13 @@ public class Pipe{
     // Get method returns value of 'lip' or top of bottom pipe adjacent to gap
     return this.bottom_lip;
   }
+  
+  
+  
+   public boolean offscreen(){ 
+    if(this.x + this.rect_width < 0){ 
+      return true; 
+    } 
+    return false; 
+  }
 }
