@@ -1,4 +1,4 @@
-Bird bird; //<>// //<>// //<>// //<>//
+Bird bird; //<>//
 
 ArrayList<Pipe> pipes = new ArrayList<Pipe>();
 
@@ -20,13 +20,14 @@ public void setup(){
 
 }
 
-
  //<>//
 public void draw(){
-  background(135, 206, 235); // Skyblue background //<>// //<>//
+  background(135, 206, 235); // Skyblue background //<>//
   bird.update();
   bird.show(); //<>//
 
+  // New pipe draw speed, inverted the original method
+  // Numbers for frame_rate based on actual pipe speed below
   if(score > 200){
     frame_rate = 125;
     if(frameCount % frame_rate == 0){
@@ -126,8 +127,7 @@ public void draw(){
     for (Pipe pipe: this.pipes){
       // Set each pipe in list with current speed
       pipe.setSpeed(this.pipeSpeed);
-  }
-
+    }
   }
   else{
     textSize(20);
@@ -138,7 +138,6 @@ public void draw(){
   }
 
 } //<>//
-
 
 
 public void keyPressed(){

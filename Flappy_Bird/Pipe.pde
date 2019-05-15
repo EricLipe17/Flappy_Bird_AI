@@ -1,6 +1,3 @@
-
-
-
 public class Pipe{
 
   private int x, rect_width;
