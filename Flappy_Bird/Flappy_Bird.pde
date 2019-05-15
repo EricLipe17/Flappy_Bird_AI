@@ -1,8 +1,8 @@
-Bird bird; //<>// //<>// //<>//
+Bird bird; //<>// //<>// //<>// //<>//
 
 ArrayList<Pipe> pipes = new ArrayList<Pipe>();
 
-int score = 0, frame_rate = 250, bird_size;
+int score = 0, frame_rate = 240, bird_size;
 
 float pipeSpeed = 1;
 
@@ -21,33 +21,60 @@ public void setup(){
 }
 
 
-
+ //<>//
 public void draw(){
-  background(135, 206, 235); // Skyblue background //<>//
+  background(135, 206, 235); // Skyblue background //<>// //<>//
   bird.update();
   bird.show(); //<>//
 
-  if(frameCount % frame_rate == 0){
-    // Graduated list of pipe gaps based on current score
-    if(score > 200){
-      pipes.add(new Pipe(80));
-    }
-    else if(score > 175){
+  if(score > 200){
+    frame_rate = 125;
+    if(frameCount % frame_rate == 0){
       pipes.add(new Pipe(100));
     }
-    else if(score > 150){
+  }else if(score > 150){
+    frame_rate = 142;
+    if(frameCount % frame_rate == 0){
       pipes.add(new Pipe(120));
     }
-    else if(score > 125){
+  }
+  else if(score > 100){
+    frame_rate = 166;
+    if(frameCount % frame_rate == 0){
       pipes.add(new Pipe(140));
     }
-    else if(score > 100){
+  }else if(score > 75){
+    frame_rate = 200;
+    if(frameCount % frame_rate == 0){
       pipes.add(new Pipe(170));
     }
-    else{
+  }else{
+    if(frameCount % frame_rate == 0){
       pipes.add(new Pipe(200));
     }
   }
+  //if(frameCount % frame_rate == 0){
+  //  // Graduated list of pipe gaps based on current score
+  //  if(score > 200){
+  //    pipes.add(new Pipe(100));
+  //    frame_rate = 125;
+  //  }
+  //  else if(score > 150){
+  //    pipes.add(new Pipe(120));
+  //    frame_rate = 142;
+  //  }
+  //  else if(score > 100){
+  //    pipes.add(new Pipe(140));
+  //    frame_rate = 166;
+  //  }
+  //  else if(score > 75){
+  //    pipes.add(new Pipe(170));
+  //    frame_rate = 200;
+  //  }
+  //  else{
+  //    pipes.add(new Pipe(200));
+  //  }
+  //}
 
   for(int i = 0; i < pipes.size(); i++){
    if(pipes.get(i).offscreen()){ 
@@ -76,7 +103,7 @@ public void draw(){
     score++;
   }
 
-  // Display score or dead
+  // Display score or dead //<>//
   if(!bird.checkHealth()){
     textSize(20);
     text("Score: " + str(score), 10, 20);
