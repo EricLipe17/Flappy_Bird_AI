@@ -136,9 +136,7 @@ public void draw(){
       pipe.setSpeed(0);
     }
   }
-
 } //<>//
-
 
 public void keyPressed(){
   // Flap if alive when enter is pressed
