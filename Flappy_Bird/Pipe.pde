@@ -30,9 +30,9 @@ public class Pipe{
 
     this.bottom_lip = this.top_lip + this.free_space;
     
-    this.up_pipe = loadImage("up_pipe.png");
+    this.up_pipe = loadImage("pipe_two_way_1000px.png");
     
-    this.down_pipe = loadImage("down_pipe.png");
+    this.down_pipe = loadImage("pipe_two_way_1000px.png");
 
   }
 
@@ -40,10 +40,10 @@ public class Pipe{
 
   public void show(){
     // Displays the up and down pipe sprites to the sketch
-    image(this.down_pipe, this.x, 0, this.rect_width, this.top_lip);
+    image(this.down_pipe, this.x, this.top_lip - 1000);
     
     // Something is wrong with the 'up_pipe' when it is displayed.
-    image(this.up_pipe, this.x, this.bottom_lip, this.rect_width, height);
+    image(this.up_pipe, this.x, this.bottom_lip);
   }
 
   

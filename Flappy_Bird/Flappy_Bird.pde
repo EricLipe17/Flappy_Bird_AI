@@ -15,7 +15,7 @@ public void setup(){
   
   bird_size = bird.get_bird_size() / 2;
 
-  pipes.add(new Pipe(95));
+  pipes.add(new Pipe(200));
   
   rect_width = pipes.get(0).get_rect_width();
 
@@ -57,10 +57,10 @@ public void draw(){
 
   for(int i = 0; i < pipes.size(); i++){
    if(pipes.get(i).offscreen()){ 
-      pipes.remove(pipes.get(i)); 
+      pipes.remove(pipes.get(i));
+      pipes_passed++; // Counting the bird made it past the pipe
     }
-  }
-    
+  
     pipes.get(i).show();
      
     // Create temp variables for each pipe set to check vs bird position
@@ -70,16 +70,12 @@ public void draw(){
     float tempBottomLip = pipes.get(i).bottom_lip;
     // Check if the bird is in a pipe
     if(bird.x + bird_size > tempLeft && bird.x + bird_size < tempRight){
-      if(bird.y - bird_size < tempTopLip || bird.y + 2*bird_size > tempBottomLip){
+      if(bird.y - bird_size < tempTopLip || bird.y + bird_size > tempBottomLip){
         // If it is, kill the bird
         bird.killBird();
       }
     }
     pipes.get(i).update();
-    // Checking if the bird made it past the pipe
-    if(bird.x == pipes.get(i).get_rect_x() + rect_width){
-      pipes_passed++;
-    }
     textSize(20);
     text("Pipes Passed: " + str(pipes_passed), 10, 50);
   }
