@@ -2,9 +2,9 @@ Bird bird; //<>// //<>// //<>//
 
 ArrayList<Pipe> pipes = new ArrayList<Pipe>();
 
-int score = 0, frame_rate = 250, bird_size;
+int score = 0, frame_rate = 250, bird_size, pipes_passed = 0;
 
-float pipeSpeed = 1;
+float pipeSpeed = 1, rect_width;
 
 
 
@@ -16,7 +16,9 @@ public void setup(){
   
   bird_size = bird.get_bird_size() / 2;
 
-  pipes.add(new Pipe(200));
+  pipes.add(new Pipe(95));
+  
+  rect_width = pipes.get(0).get_rect_width();
 
 }
 
@@ -29,23 +31,8 @@ public void draw(){
 
   if(frameCount % frame_rate == 0){
     // Graduated list of pipe gaps based on current score
-    if(score > 200){
-      pipes.add(new Pipe(80));
-    }
-    else if(score > 175){
-      pipes.add(new Pipe(100));
-    }
-    else if(score > 150){
-      pipes.add(new Pipe(120));
-    }
-    else if(score > 125){
-      pipes.add(new Pipe(140));
-    }
-    else if(score > 100){
-      pipes.add(new Pipe(170));
-    }
-    else{
-      pipes.add(new Pipe(200));
+    if(score >= 0){
+      pipes.add(new Pipe(95));
     }
   }
 
@@ -69,6 +56,12 @@ public void draw(){
       }
     }
     pipes.get(i).update();
+    // Checking if the bird made it past the pipe
+    if(bird.x == pipes.get(i).get_rect_x() + rect_width){
+      pipes_passed++;
+    }
+    textSize(20);
+    text("Pipes Passed: " + str(pipes_passed), 10, 50);
   }
 
   // Add points for time lived
@@ -81,21 +74,10 @@ public void draw(){
     textSize(20);
     text("Score: " + str(score), 10, 20);
     // Graduated speed if scoreing increases
-    if(score > 200){
-      this.pipeSpeed = 2;
-    }
-    else if(score > 150){
-      this.pipeSpeed = 1.75;
-    }
-    else if(score > 100){
-      this.pipeSpeed = 1.50;
-    }
-    else if(score > 75){
+    if(score > 100){
       this.pipeSpeed = 1.25;
     }
-    else{
-      this.pipeSpeed = 1;
-    }
+   
     for (Pipe pipe: this.pipes){
       // Set each pipe in list with current speed
       pipe.setSpeed(this.pipeSpeed);

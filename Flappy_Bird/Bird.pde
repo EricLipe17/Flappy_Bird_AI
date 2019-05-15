@@ -1,4 +1,5 @@
 public class Bird{
+  // Attributes
 
   private int x, y, bird_size, img_size;
 
@@ -11,6 +12,7 @@ public class Bird{
   
 
   public Bird(){
+    // Bird constructor
 
     this.x = 50;
 
@@ -33,19 +35,14 @@ public class Bird{
   
 
   public void show(){
-    if(!isDead){
-      fill(255, 255, 0);
-    }
-    else{
-      fill(255, 0, 0);
-    }
-    ellipse(this.x, this.y, bird_size, bird_size);
+    // Displays the Flappy Bird sprite in the sketch
     image(bird_img, this.x - 125, this.y - 125, img_size, img_size);
   }
 
   
 
   public void update(){
+    // Updates the birds y-position based on gravity
     if(this.y >= height){
       this.y = height;
       this.velocity = 0;
@@ -62,24 +59,28 @@ public class Bird{
   
 
   public void flap(){
+    // Updates the birds position based on the strength of the flap force
     this.velocity -= this.flap_force;
   }
 
   
 
   public boolean checkHealth(){
+    // Get method returns status of bird
     return isDead;
   }
 
   
 
   public void killBird(){
+    // Sets the birds life status to dead
     isDead = true;
   }
   
   
   
   public int get_bird_size(){
+    // Get method returns birds size
     return this.bird_size;
   }
 }

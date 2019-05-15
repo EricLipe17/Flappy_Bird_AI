@@ -1,12 +1,17 @@
 
 public class Pipe{
+  // Attributes
 
   private int x, rect_width;
 
   private float speed, free_space, rect_height, rand_length, top_lip, bottom_lip, min_height;
+  
+  private PImage up_pipe, down_pipe;
+
 
 
   public Pipe(int gap_In){
+    // Pipe constructor
 
     this.x = width;
 
@@ -25,15 +30,21 @@ public class Pipe{
     this.top_lip = this.min_height + this.rand_length;
 
     this.bottom_lip = this.top_lip + this.free_space;
+    
+    this.up_pipe = loadImage("up_pipe.png");
+    
+    this.down_pipe = loadImage("down_pipe.png");
 
   }
 
   
 
   public void show(){
-    fill(212, 175, 55); // Gold pipes
-    rect(this.x, 0, this.rect_width, this.top_lip);
-    rect(this.x, this.bottom_lip, this.rect_width, height);
+    // Displays the up and down pipe sprites to the sketch
+    image(this.down_pipe, this.x, 0, this.rect_width, this.top_lip);
+    
+    // Something is wrong with the 'up_pipe' when it is displayed.
+    image(this.up_pipe, this.x, this.bottom_lip, this.rect_width, height);
   }
 
   
@@ -67,9 +78,24 @@ public class Pipe{
   
   
    public boolean offscreen(){ 
+    // Determines whether or not the pipe object is off of the screen
     if(this.x + this.rect_width < 0){ 
       return true; 
     } 
     return false; 
-  }
+   }
+   
+   
+   
+   public int get_rect_width(){
+     // Get method returns the pipes width
+     return this.rect_width;
+   }
+   
+   
+   
+   public int get_rect_x(){
+     // Get method returns the pipes x coordinate
+     return this.x;
+   }
 }
