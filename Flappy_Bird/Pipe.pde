@@ -41,8 +41,6 @@ public class Pipe{
   public void show(){
     // Displays the up and down pipe sprites to the sketch
     image(this.down_pipe, this.x, this.top_lip - 1000);
-    
-    // Something is wrong with the 'up_pipe' when it is displayed.
     image(this.up_pipe, this.x, this.bottom_lip);
   }
 
