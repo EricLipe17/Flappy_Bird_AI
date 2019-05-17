@@ -1,0 +1,467 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0   http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.ujmp</groupId>
+    <artifactId>ujmp</artifactId>
+    <version>0.3.0</version>
+    <packaging>pom</packaging>
+    <name>Universal Java Matrix Package</name>
+    <url>https://ujmp.org/</url>
+    <description>
+        The Universal Java Matrix Package (UJMP) is an open source library for dense and sparse matrix computations and
+        linear algebra in Java. In addition to the basic operations like matrix multiplication, matrix inverse or
+        decomposition methods, it also supports visualization, JDBC import/export and many other useful functions such
+        as mean, correlation, standard deviation, mutual information, or the replacement of missing values.
+        It's a swiss army knife for data processing in Java, tailored to machine learning applications.
+    </description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <rootdir>${basedir}</rootdir>
+        <skipTests>true</skipTests>
+    </properties>
+
+    <developers>
+        <developer>
+            <id>arndt</id>
+            <name>Holger Arndt</name>
+            <email>mail@holger-arndt.com</email>
+            <url>https://holger-arndt.com/</url>
+            <roles>
+                <role>Project Manager</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <organization>
+        <name>Universal Java Matrix Package</name>
+        <url>https://ujmp.org/</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>GNU LESSER GENERAL PUBLIC LICENSE</name>
+            <url>http://www.gnu.org/licenses/lgpl-3.0</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/ujmp/universal-java-matrix-package</url>
+        <connection>scm:git:git://github.com/ujmp/universal-java-matrix-package.git</connection>
+        <developerConnection>scm:git:git@github.com:ujmp/universal-java-matrix-package.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <url>https://github.com/ujmp/universal-java-matrix-package/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+
+    <modules>
+        <module>../ujmp-colt</module>
+        <module>../ujmp-commonsmath</module>
+        <module>../ujmp-complete</module>
+        <module>../ujmp-core</module>
+        <module>../ujmp-ehcache</module>
+        <module>../ujmp-ejml</module>
+        <module>../ujmp-elasticsearch</module>
+        <module>../ujmp-examples</module>
+        <module>../ujmp-gui</module>
+        <module>../ujmp-hadoop</module>
+        <module>../ujmp-itext</module>
+        <module>../ujmp-jackcess</module>
+        <module>../ujmp-jama</module>
+        <module>../ujmp-jblas</module>
+        <module>../ujmp-jdbc</module>
+        <module>../ujmp-jetty</module>
+        <module>../ujmp-jfreechart</module>
+        <module>../ujmp-jmatio</module>
+        <module>../ujmp-jsch</module>
+        <module>../ujmp-jsci</module>
+        <module>../ujmp-jscience</module>
+        <module>../ujmp-jung</module>
+        <module>../ujmp-la4j</module>
+        <module>../ujmp-lucene</module>
+        <module>../ujmp-mail</module>
+        <module>../ujmp-mtj</module>
+        <module>../ujmp-ojalgo</module>
+        <module>../ujmp-parallelcolt</module>
+        <module>../ujmp-pdfbox</module>
+        <module>../ujmp-poi</module>
+        <module>../ujmp-vecmath</module>
+    </modules>
+
+    <profiles>
+        <profile>
+            <id>ujmp</id>
+            <properties>
+                <skipJavadoc>true</skipJavadoc>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <distributionManagement>
+                <site>
+                    <id>ujmp.org</id>
+                    <url>scp://ujmp.org/var/www/ujmp.org/0.3.0/ujmp/</url>
+                </site>
+            </distributionManagement>
+        </profile>
+        <profile>
+            <id>ossrh</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+                <repository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+            <build>
+                <plugins>
+                    <!-- create javadoc -->
+                    <plugin>
+                        <inherited>true</inherited>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.10.3</version>
+                        <configuration>
+                            <!-- collect all files in one directory, seems to take longer -->
+                            <!-- Creating fake javadoc directory to prevent repeated invocations when enabled -->
+                            <!-- <outputDirectory>${rootdir}/target/apidocs/${project.name}</outputDirectory>
+                            <reportOutputDirectory>${rootdir}/target/apidocs/${project.name}</reportOutputDirectory> -->
+
+                            <!-- include source code in javadoc, seems to take longer if enabled -->
+                            <linksource>false</linksource>
+
+                            <!-- helps to speed things up -->
+                            <maxmemory>2g</maxmemory>
+
+                            <!-- set this to true to fix the OutOfMemoryException in Java 8 for Windows -->
+                            <noindex>false</noindex>
+
+                            <!-- it takes very long when set to false -->
+                            <notree>false</notree>
+
+                            <!-- not sure what this does -->
+                            <failOnError>false</failOnError>
+
+                            <!-- other possible settings, don't seem to be necessary -->
+                            <!-- <notree>true</notree> -->
+                            <!-- <additionalJOptions> -->
+                            <!--   <additionalJOption>-J-Xss512M</additionalJOption> -->
+                            <!--   <additionalJOption>-J-XX:MaxPermSize=512M</additionalJOption> -->
+                            <!-- </additionalJOptions> -->
+
+                            <header><![CDATA[
+						<script async
+							src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+						<ins class="adsbygoogle" style="display:inline-block;width:320px;height:50px"
+							data-ad-client="ca-pub-1238159289842092" data-ad-slot="8359296562"></ins>
+						<script>
+							(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
+					]]></header>
+
+                            <footer><![CDATA[
+						<script type="text/javascript">
+                           var _paq = _paq || [];
+                           _paq.push(["trackPageView"]);
+                           _paq.push(["enableLinkTracking"]);
+                           (function () {
+                             var u = (("https:" == document.location.protocol) ? "https" : "http") + "://ujmp.org/tracking/";
+                             _paq.push(["setTrackerUrl", u + "piwik.php"]);
+                             _paq.push(["setSiteId", "2"]);
+                             var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0];
+                             g.type = "text/javascript";
+                             g.defer = true;
+                             g.async = true;
+                             g.src = u + "piwik.js";
+                             s.parentNode.insertBefore(g, s);
+                           })();
+                         </script>
+                         <noscript>
+                           <img src="//ujmp.org/tracking/piwik.php?idsite=2&amp;rec=1" style="border:0" alt=""/>
+                         </noscript>
+					]]></footer>
+
+                            <links>
+                                <link>https://ujmp.org/${project.version}/ujmp-colt/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-commonsmath/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-complete/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-core/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-ehcache/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-ejml/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-elasticsearch/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-examples/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-gui/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-hadoop/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-itext/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-jackcess/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-jama/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-jblas/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-jdbc/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-jetty/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-jfreechart/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-jmatio/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-jsch/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-jsci/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-jscience/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-jung/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-la4j/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-lucene/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-mail/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-mtj/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-ojalgo/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-parallelcolt/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-pdfbox/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-poi/apidocs</link>
+                                <link>https://ujmp.org/${project.version}/ujmp-vecmath/apidocs</link>
+                            </links>
+
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>sourceforge</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>sourceforge</id>
+                    <name>SourceForge</name>
+                    <url>sftp://holger-arndt,ujmp@frs.sourceforge.net:/home/frs/project/u/uj/ujmp/snapshots</url>
+                </snapshotRepository>
+                <repository>
+                    <id>sourceforge</id>
+                    <name>SourceForge</name>
+                    <url>sftp://holger-arndt,ujmp@frs.sourceforge.net:/home/frs/project/u/uj/ujmp/releases</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
+
+    <build>
+
+        <!-- copy license files to META-INF -->
+        <resources>
+            <resource>
+                <targetPath>META-INF</targetPath>
+                <filtering>false</filtering>
+                <directory>${basedir}/META-INF</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+
+            <!-- be able to skip tests -->
+            <plugin>
+                <inherited>true</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.18.1</version>
+                <configuration>
+                    <skipTests>${skipTests}</skipTests>
+                </configuration>
+            </plugin>
+
+            <!-- set compile level -->
+            <plugin>
+                <inherited>true</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+
+            <!-- needed for creating project site -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.4</version>
+                <configuration>
+                    <templateFile>${rootdir}/default-site.vm</templateFile>
+                </configuration>
+                <dependencies>
+                    <!-- for scp protocol -->
+                    <dependency>
+                        <groupId>org.apache.maven.wagon</groupId>
+                        <artifactId>wagon-ssh</artifactId>
+                        <version>2.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!-- needed for site plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.8</version>
+            </plugin>
+
+            <!-- create sources jar files -->
+            <plugin>
+                <inherited>true</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- sign jar files -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- release to maven central -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.2</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <goals>deploy</goals>
+                </configuration>
+            </plugin>
+
+            <!-- create jar files -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <!-- set main class -->
+                            <mainClass>org.ujmp.core.UJMP</mainClass>
+
+                            <!-- lists the dependency jar files in the class path -->
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                        <manifestEntries>
+                            <!-- add link to manifest -->
+                            <url>https://ujmp.org/</url>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+
+                <!-- needed to create test-jar -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+            </plugin>
+
+            <!-- assemble all files into single jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.5.5</version>
+                <configuration>
+                    <outputDirectory>${rootdir}/target</outputDirectory>
+                    <descriptors>
+                        <descriptor>src/assemble/complete.xml</descriptor>
+                        <descriptor>src/assemble/sources.xml</descriptor>
+                        <descriptor>src/assemble/with-deps.xml</descriptor>
+                        <descriptor>src/assemble/deps.xml</descriptor>
+                        <descriptor>src/assemble/libs.xml</descriptor>
+                    </descriptors>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.ujmp.gui.UJMP</mainClass>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                        <manifestEntries>
+                            <url>https://ujmp.org/</url>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+        <!-- is this needed? -->
+        <!--<pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-enforcer-plugin</artifactId>
+                                        <versionRange>[1.0.0,)</versionRange>
+                                        <goals>
+                                            <goal>enforce</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore/>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>-->
+
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
