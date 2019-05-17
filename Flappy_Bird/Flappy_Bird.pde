@@ -1,3 +1,5 @@
+import universal-java-matrix-package;
+
 Bird bird;
 
 ArrayList<Pipe> pipes = new ArrayList<Pipe>();
@@ -106,6 +108,9 @@ public void draw(){
       pipe.setSpeed(0);
     }
   }
+  
+  Matrix dense = DenseMatrix.Factory.zeros(4, 4);
+  println(dense);
 }
 
 public void keyPressed(){
