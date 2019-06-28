@@ -25,7 +25,7 @@ actions = 2
 # Decay rate for past observations
 gamma = 0.99
 
-# Timesteps to observe prior to training
+# Time steps to observe prior to training
 observation = 3200.
 
 # Frames over which to anneal epsilon
@@ -161,29 +161,6 @@ def train_network(model, args):
 
             loss += model.train_on_batch(state_t, targets)
 
-            # Less optimal experience replay
-            # inputs = np.zeros((batch, s_t.shape[1], s_t.shape[2], s_t.shape[3]))  # 32, 80, 80, 4
-            # targets = np.zeros((inputs.shape[0], actions))  # 32, 2
-            # for i in range(0, len(mini_batch)):
-                # state_t = mini_batch[i][0]
-                # action_t = mini_batch[i][1]  # This is action index
-                # reward_t = mini_batch[i][2]
-                # state_t1 = mini_batch[i][3]
-                # terminal = mini_batch[i][4]
-                #
-                # # if terminated, only equals reward
-                # inputs[i:i + 1] = state_t  # saved down s_t
-                #
-                # targets[i] = model.predict(state_t)  # Probability of hitting button
-                # Q_sa = model.predict(state_t1)
-                #
-                # if terminal:
-                #     targets[i, action_t] = reward_t
-                # else:
-                #     targets[i, action_t] = reward_t + gamma * np.max(Q_sa)
-                #
-                # loss += model.train_on_batch(inputs, targets)
-
         s_t = s_t1
         t += 1
 
@@ -195,7 +172,6 @@ def train_network(model, args):
                 json.dump(model.to_json(), outfile)
 
         # Print info
-        state = ""
         if t <= observe:
             state = "Observe"
         elif observe < t < observe + explore:
@@ -206,9 +182,6 @@ def train_network(model, args):
         print("Timestep", t, "/ State", state,
               "/ Epsilon", epsilon, "/ Action", action_index, "/ Reward", r_t,
               "/ Q_Max", np.max(Q_sa), "/ Loss", loss)
-
-    print("Episode Finished!")
-    print("***********************")
 
 
 def play_game(args):

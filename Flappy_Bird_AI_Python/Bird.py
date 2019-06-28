@@ -16,6 +16,8 @@ class Bird:
         self.bird_img = pg.image.load("flappy_free.png")
         self.is_dead = False
         self.neuro_evo = neuro_evo
+        self.score = 0
+        self.fitness = 0
         if not self.neuro_evo:
             self.brain = None
         else:
@@ -24,12 +26,13 @@ class Bird:
 
     # Calculates the bird's new position based on the "game physics."
     def update(self):
+        self.score += 1
         if self.neuro_evo:
             if self.y >= self.win.get_height() - 23:
-                self.y = self.win.get_height() - 23
+                # self.y = self.win.get_height() - 23
                 self.velocity = 0
             elif self.y <= 2:
-                self.y = 2
+                # self.y = 2
                 self.velocity = 0
             else:
                 self.velocity += self.gravity
@@ -84,7 +87,7 @@ class Bird:
 
         output = self.brain.predict(inputs)
         print(output[0])
-        if output[0] > 0.5:
+        if output[0] >= 0.5:
             self.flap()
 
 

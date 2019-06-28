@@ -1,9 +1,14 @@
-from Flappy_Bird_AI_Python import FlappyBird
+# from Flappy_Bird_AI_Python import FlappyBird
+#
+# game = FlappyBird.FlappyBird(fps=60)
+#
+# game.run()
 
-game = FlappyBird.FlappyBird(fps=60)
+from Flappy_Bird_AI_Python import Brain
 
-game.run()
-
+b = Brain.Brain()
+b.build_brain()
+b.mutate(proba=1)
 
 # import pygame as pg
 # import Pipe

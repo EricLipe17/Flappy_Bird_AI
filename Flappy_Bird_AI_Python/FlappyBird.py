@@ -20,6 +20,7 @@ class FlappyBird:
         self.pipes = list()
         self.bird_size = self.bird.get_bird_size()
         self.counter = 0
+        self.extra_counter = 1
         self.background = pygame.image.load("flappy_background.png")
         self.initial_time = time.time()
         self.flapped = False
@@ -129,8 +130,18 @@ class FlappyBird:
 
         self.draw_pipe_check_collision_increment_score()
 
+        # This is to help the AI initially to learn that it needs to be crossing the pipes without dying. The first 5
+        # pipes will have a larger than normal gap to help.
+
         if (self.counter / 250).is_integer():
-            self.pipes.append(Pipe.Pipe(self.win, 90))
+            if 1 <= self.extra_counter <= 2:
+                self.pipes.append(Pipe.Pipe(self.win, 150))
+                self.counter += 1
+            elif 3 <= self.extra_counter <= 5:
+                self.pipes.append(Pipe.Pipe(self.win, 110))
+                self.counter += 1
+            else:
+                self.pipes.append(Pipe.Pipe(self.win, 90))
         self.counter += 1
 
         image_data = pygame.surfarray.array3d(pygame.display.get_surface())
