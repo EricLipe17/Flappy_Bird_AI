@@ -1,6 +1,5 @@
 import pygame
-import Bird
-import Pipe
+from Flappy_Bird_AI_Python import Bird, Pipe
 import time
 import math
 

@@ -5,7 +5,7 @@ from skimage import transform, color, exposure
 # from skimage.transform import rotate
 # from skimage.viewer import ImageViewer
 
-import FlappyBird as game
+from Flappy_Bird_AI_Python import FlappyBird as game
 import random
 import numpy as np
 from collections import deque
@@ -14,7 +14,7 @@ import json
 # from keras.initializers import normal, identity
 # from keras.models import model_from_json
 from keras.models import Sequential
-from keras.layers.core import Dense, Dropout, Activation, Flatten
+from keras.layers.core import Dense, Activation, Flatten
 from keras.layers.convolutional import Convolution2D
 from keras.optimizers import Adam
 import tensorflow as tf

@@ -1,4 +1,4 @@
-import FlappyBird
+from Flappy_Bird_AI_Python import FlappyBird
 
 game = FlappyBird.FlappyBird(fps=60)
 

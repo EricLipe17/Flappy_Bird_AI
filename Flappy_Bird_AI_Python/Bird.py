@@ -1,5 +1,5 @@
 import pygame as pg
-import Brain
+from Flappy_Bird_AI_Python import Brain
 import numpy as np
 
 
