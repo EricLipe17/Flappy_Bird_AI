@@ -4,7 +4,7 @@ import numpy as np
 
 
 class Bird:
-    def __init__(self, window, neuro_evo=False):
+    def __init__(self, window, brain=None, neuro_evo=False):
         self.win = window
         self.x = 75
         self.y = self.win.get_height() // 2
@@ -21,23 +21,31 @@ class Bird:
         if not self.neuro_evo:
             self.brain = None
         else:
-            self.brain = Brain.Brain()
-            self.brain.build_brain()
+            if brain:
+                self.brain = brain
+            else:
+                self.brain = Brain.Brain()
+                self.brain.build_brain()
 
     # Calculates the bird's new position based on the "game physics."
     def update(self):
         self.score += 1
         if self.neuro_evo:
             if self.y >= self.win.get_height() - 23:
-                # self.y = self.win.get_height() - 23
+                # self.x = -100
                 self.velocity = 0
+                self.is_dead = True
+                return self.is_dead
             elif self.y <= 2:
-                # self.y = 2
+                # self.x = - 100
                 self.velocity = 0
+                self.is_dead = True
+                return self.is_dead
             else:
                 self.velocity += self.gravity
                 self.velocity *= 0.95
                 self.y += self.velocity
+                return self.is_dead
         else:
             if self.y >= self.win.get_height() - 23:
                 self.y = self.win.get_height() - 23
@@ -86,9 +94,9 @@ class Bird:
                            pipes[0].get_bottom_lip() / self.win.get_height(), pipes[0].get_pipe_x() / self.win.get_width()])
 
         output = self.brain.predict(inputs)
-        print(output[0])
         if output[0] >= 0.5:
             self.flap()
+
 
 
 

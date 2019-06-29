@@ -48,7 +48,7 @@ learning_rate = 1e-5
 img_rows, img_cols = 80, 80
 img_channels = 4
 
-# Convolutio nal Neural Network.
+# Convolutional Neural Network.
 def build_model():
     model = Sequential()
     model.add(Convolution2D(32, (8, 8), strides=(4, 4), padding="same", input_shape=(img_rows, img_cols, img_channels)))  # 80*80*4

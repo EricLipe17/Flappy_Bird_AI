@@ -1,12 +1,14 @@
 from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation
 from keras.optimizers import Adam
+import tensorflow as tf
 import numpy as np
 import random
 
 
 class Brain:
     def __init__(self, learning_rate=1e-5):
+        tf.logging.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
         self.brain = Sequential()
         self.learning_rate = learning_rate
 
