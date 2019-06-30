@@ -8,7 +8,7 @@ import random
 
 class Brain:
     def __init__(self, learning_rate=1e-5):
-        tf.logging.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+        tf.logging.set_verbosity(tf.logging.ERROR)
         self.brain = Sequential()
         self.learning_rate = learning_rate
 

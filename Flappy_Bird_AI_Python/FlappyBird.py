@@ -24,14 +24,13 @@ class FlappyBird:
         self.background = pygame.image.load("flappy_background.png")
         self.initial_time = time.time()
         self.flapped = False
-        self.bird.set_gravity(self.bird.get_gravity() * (60 / self.fps))
 
     def draw_pipe_check_collision_increment_score(self):
         for pipe in self.pipes:
             if pipe.off_screen():
                 self.pipes.remove(pipe)
             else:
-                pipe.set_speed(60 / self.fps)
+                pipe.set_speed(60)
                 pipe.show()
 
             # Create temp variables for each pipe set to check vs bird position.
@@ -92,7 +91,7 @@ class FlappyBird:
     # This function will be used in the Q-learning algorithm to return the state of the game.
     def frame_step(self, input_actions):
         pygame.event.pump()
-        self.clock.tick(30)
+        self.clock.tick(self.fps)
 
         reward = 0.1
         terminal = False
